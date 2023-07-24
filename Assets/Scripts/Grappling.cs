@@ -12,6 +12,7 @@ public class Grappling : MonoBehaviour
     public LayerMask grappleable;
     public LineRenderer lr;
     public Transform hold;
+    public LayerMask holdable;
 
     [Header("Grappling")]
     public float maxGrappleDistance;
@@ -20,8 +21,9 @@ public class Grappling : MonoBehaviour
     private Vector3 grapplePoint;
 
     [Header("Holding")]
-    public float pickupRange = 5.0f;
     public float pickupForce = 150.0f;
+    public GameObject heldObj;
+    public Rigidbody heldObjRB;
 
     [Header("Cooldown")]
     public float grapplingCooldown;
@@ -33,22 +35,24 @@ public class Grappling : MonoBehaviour
 
     [Header("Prediction")]
     public RaycastHit predictionHit;
+    public RaycastHit predictionHoldHit;
     public float predictionSphereCastRadius;
     public Transform predictionPoint;
-
-
+    private bool predictionHoldable;
     private bool grappling;
+    private bool holding;
     private bool reeling = false;
-
-    private GameObject heldObj;
-    private Rigidbody heldObjRB;
 
     private void Start() {
         pm = GetComponent<PlayerMovement>();
     }
 
     private void Update() {
-        if(Input.GetKeyDown(grappleInput)) StartGrapple();
+        if(Input.GetKeyDown(grappleInput) && heldObj != null) DropObject();
+        if(Input.GetKeyDown(grappleInput) && heldObj == null) StartGrapple();
+        if(heldObj != null) MoveObject();
+
+        Debug.Log(predictionHoldable);
 
         CheckForGrapplePoints();
 
@@ -66,6 +70,9 @@ public class Grappling : MonoBehaviour
 
             lr.SetPosition(0, tip.position);
             lr.SetPosition(1, currentGrapplePosition);
+        } else if(holding){
+            lr.SetPosition(0, tip.position);
+            lr.SetPosition(1, heldObj.transform.position);
         } else if(reeling){
             currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, tip.position, Time.deltaTime * 8f);
 
@@ -83,10 +90,15 @@ public class Grappling : MonoBehaviour
     private void StartGrapple(){
         if(grapplingCooldownTimer > 0) return;
         GetComponent<Swinging>().StopSwing();
-        grappling = true;      
-        reeling = false;
 
-        if(predictionHit.point != Vector3.zero){
+        
+        if (predictionHoldable){
+            reeling = false;
+            grapplePoint = predictionHit.transform.position;
+            PickupObject(predictionHit.transform.gameObject);
+        } else if(predictionHit.point != Vector3.zero && !predictionHoldable){
+            grappling = true;      
+            reeling = false;
             grapplePoint = predictionHit.point;
             Invoke(nameof(ExecuteGrapple), grappleDelayTime);
         } else {
@@ -118,6 +130,41 @@ public class Grappling : MonoBehaviour
 
         grapplingCooldownTimer = grapplingCooldown;
     }
+    
+    private void PickupObject(GameObject obj){
+        if(obj.GetComponent<Rigidbody>()){
+            heldObjRB = obj.GetComponent<Rigidbody>();
+            heldObjRB.useGravity = false;
+            heldObjRB.drag = 10;
+            heldObjRB.constraints = RigidbodyConstraints.FreezeRotation;
+
+            heldObjRB.transform.parent = hold;
+            heldObj = obj;
+
+            holding = true;
+        }
+    }
+    
+    private void DropObject(){
+        heldObjRB.useGravity = true;
+        heldObjRB.drag = 1;
+        heldObjRB.constraints = RigidbodyConstraints.None;
+
+        heldObj.transform.parent = null;
+        heldObj = null;
+
+        holding = false;
+
+        StopGrapple();
+    }
+
+    private void MoveObject(){
+        if(Vector3.Distance(heldObj.transform.position, hold.position) > 0.1f){
+            Vector3 moveDirection = (hold.position - heldObj.transform.position);
+            heldObjRB.AddForce(moveDirection * pickupForce);
+        }
+    }
+
     private void CheckForGrapplePoints(){
         if(grappling) return;
         
@@ -127,14 +174,38 @@ public class Grappling : MonoBehaviour
         RaycastHit raycastHit;
         Physics.Raycast(cam.position, cam.forward, out raycastHit, maxGrappleDistance, grappleable);
 
+        RaycastHit sphereCastHitHold;
+        Physics.SphereCast(grappleDirection.position, predictionSphereCastRadius, grappleDirection.forward, out sphereCastHitHold, maxGrappleDistance, holdable);
+
+        RaycastHit raycastHitHold;
+        Physics.Raycast(cam.position, cam.forward, out raycastHitHold, maxGrappleDistance, holdable);
+        
         Vector3 realHitPoint;
 
-        if(raycastHit.point != Vector3.zero)
-            realHitPoint = raycastHit.point;
-        else if(sphereCastHit.point != Vector3.zero)
-            realHitPoint = sphereCastHit.point;
-        else
+        if(raycastHit.point != Vector3.zero || raycastHitHold.point != Vector3.zero){
+            if(raycastHit.point != Vector3.zero){
+                realHitPoint = raycastHit.point;
+                predictionHit = raycastHit;
+                predictionHoldable = false;
+            } else {
+                realHitPoint = raycastHitHold.point;
+                predictionHit = raycastHitHold;
+                predictionHoldable = true;
+            }
+        } else if(sphereCastHit.point != Vector3.zero || sphereCastHitHold.point != Vector3.zero){
+            if(sphereCastHit.point != Vector3.zero){
+                realHitPoint = sphereCastHit.point;
+                predictionHit = sphereCastHit;
+                predictionHoldable = false;
+            } else {
+                realHitPoint = sphereCastHitHold.point;
+                predictionHit = sphereCastHitHold;
+                predictionHoldable = true;
+            }
+        } else{
             realHitPoint = Vector3.zero;
+            predictionHoldable = false;
+        }
         
         if(realHitPoint != Vector3.zero){
             predictionPoint.gameObject.SetActive(true);
@@ -142,7 +213,5 @@ public class Grappling : MonoBehaviour
         } else {
             predictionPoint.gameObject.SetActive(false);
         }
-
-        predictionHit = raycastHit.point == Vector3.zero ? sphereCastHit : raycastHit;
     }
 }
