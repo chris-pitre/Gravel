@@ -333,37 +333,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &402722353
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 402722354}
-  m_Layer: 0
-  m_Name: Hold Area
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &402722354
+--- !u!4 &402722354 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 3727420704481879450, guid: 32f0543e710e955448d8a21a0e74b74f, type: 3}
+  m_PrefabInstance: {fileID: 5786115173098062371}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 402722353}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.114, y: 0, z: 2.167}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 963194228}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!120 &456186732 stripped
 LineRenderer:
   m_CorrespondingSourceObject: {fileID: 3336283670052810419, guid: 32f0543e710e955448d8a21a0e74b74f, type: 3}
@@ -1469,9 +1443,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 70982602933575687, guid: 32f0543e710e955448d8a21a0e74b74f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 402722354}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32f0543e710e955448d8a21a0e74b74f, type: 3}
