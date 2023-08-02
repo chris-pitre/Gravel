@@ -4,7 +4,19 @@ using UnityEngine;
 
 public class GoalArea : MonoBehaviour
 {
-    //todo: add references and stuff to dictate whenever a game object enters or something
+    [Header("References")]
+    public MeshCollider leaveArea;
 
+    private void OnTriggerEnter(Collider other) {
+        if(other.tag == "Cargo"){
+            Debug.Log("Cargo in Goal Area");
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if(other.tag == "Cargo"){
+            Debug.Log("Cargo left Goal Area");
+        }
+    }
 
 }

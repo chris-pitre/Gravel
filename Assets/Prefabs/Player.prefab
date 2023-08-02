@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 329961496062392061}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -68,7 +68,7 @@ Transform:
   - {fileID: 4989821030485791822}
   - {fileID: 6904354648264108874}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &3552268074892814784
 Rigidbody:
@@ -145,9 +145,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   lr: {fileID: 0}
+  hold: {fileID: 0}
+  holdable:
+    serializedVersion: 2
+    m_Bits: 0
   maxGrappleDistance: 25
   grappleDelayTime: 0.25
   overshootYAxis: 0.1
+  pickupForce: 150
+  heldObj: {fileID: 0}
+  heldObjRB: {fileID: 0}
   grapplingCooldown: 1
   grappleInput: 323
   predictionSphereCastRadius: 3
