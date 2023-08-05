@@ -167,7 +167,7 @@ public class Grappling : MonoBehaviour
 
     private void CheckForGrapplePoints(){
         if(grappling) return;
-        
+
         RaycastHit sphereCastHit;
         Physics.SphereCast(grappleDirection.position, predictionSphereCastRadius, grappleDirection.forward, out sphereCastHit, maxGrappleDistance, grappleable);
 
