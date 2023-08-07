@@ -68,7 +68,7 @@ Transform:
   - {fileID: 4989821030485791822}
   - {fileID: 6904354648264108874}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &3552268074892814784
 Rigidbody:
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 10
   swingSpeed: 30
-  airSpeed: 10
+  airSpeed: 5
   groundDrag: 15
   jumpForce: 12
   jumpCooldown: 0.25
@@ -120,7 +120,7 @@ MonoBehaviour:
   playerHeight: 2
   ground:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 65
   orientation: {fileID: 2513134028898782565}
   state: 0
   freeze: 0
@@ -143,12 +143,12 @@ MonoBehaviour:
   grappleDirection: {fileID: 0}
   grappleable:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 192
   lr: {fileID: 0}
   hold: {fileID: 0}
   holdable:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   maxGrappleDistance: 25
   grappleDelayTime: 0.25
   overshootYAxis: 0.1
@@ -178,7 +178,7 @@ MonoBehaviour:
   player: {fileID: 733824559565071671}
   grappleable:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 192
   pm: {fileID: 4547784453861433458}
   swingKey: 324
   orientation: {fileID: 2513134028898782565}
@@ -213,7 +213,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4634841593472136794}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.6669999, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

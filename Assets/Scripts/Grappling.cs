@@ -183,24 +183,24 @@ public class Grappling : MonoBehaviour
         Vector3 realHitPoint;
 
         if(raycastHit.point != Vector3.zero || raycastHitHold.point != Vector3.zero){
-            if(raycastHit.point != Vector3.zero){
-                realHitPoint = raycastHit.point;
-                predictionHit = raycastHit;
-                predictionHoldable = false;
-            } else {
+            if(raycastHitHold.point != Vector3.zero){
                 realHitPoint = raycastHitHold.point;
                 predictionHit = raycastHitHold;
                 predictionHoldable = true;
+            } else {
+                realHitPoint = raycastHit.point;
+                predictionHit = raycastHit;
+                predictionHoldable = false;
             }
         } else if(sphereCastHit.point != Vector3.zero || sphereCastHitHold.point != Vector3.zero){
-            if(sphereCastHit.point != Vector3.zero){
-                realHitPoint = sphereCastHit.point;
-                predictionHit = sphereCastHit;
-                predictionHoldable = false;
-            } else {
+            if(sphereCastHitHold.point != Vector3.zero){
                 realHitPoint = sphereCastHitHold.point;
                 predictionHit = sphereCastHitHold;
                 predictionHoldable = true;
+            } else {
+                realHitPoint = sphereCastHit.point;
+                predictionHit = sphereCastHit;
+                predictionHoldable = false;
             }
         } else{
             realHitPoint = Vector3.zero;
