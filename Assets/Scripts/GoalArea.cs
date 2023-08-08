@@ -5,17 +5,19 @@ using UnityEngine;
 public class GoalArea : MonoBehaviour
 {
     [Header("References")]
-    public MeshCollider leaveArea;
+    public ExitArea exitArea;
 
     private void OnTriggerEnter(Collider other) {
-        if(other.tag == "Cargo"){
-            Debug.Log("Cargo in Goal Area");
+        if(other.gameObject.CompareTag("Cargo")){
+            GameManager.Instance.cargoInArea = true;
+            exitArea.SetExitActive(true);
         }
     }
 
     private void OnTriggerExit(Collider other) {
-        if(other.tag == "Cargo"){
-            Debug.Log("Cargo left Goal Area");
+        if(other.gameObject.CompareTag("Cargo")){
+            GameManager.Instance.cargoInArea = false;
+            exitArea.SetExitActive(false);
         }
     }
 

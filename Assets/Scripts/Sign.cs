@@ -76,6 +76,7 @@ public class Sign : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if(other.gameObject.CompareTag("Player") && !reading){
+            readPrompt.text = "(E) Read";
             readable = true;
             playerColliding = true;
             readPrompt.enabled = true;
