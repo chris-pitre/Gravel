@@ -10,6 +10,11 @@ public class ExitArea : MonoBehaviour
     public Material activeMaterial;
     public TextMeshPro prompt;
 
+    private void Update() {
+        if(GameManager.Instance.cargoInArea && Input.GetKeyDown(KeyCode.E)){
+            GameManager.Instance.ChangeToNextLevel();
+        }
+    }
     public void SetExitActive(bool active){
         gameObject.GetComponent<MeshRenderer>().material = active ? activeMaterial : inactiveMaterial;
     }

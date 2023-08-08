@@ -5,8 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("References")]
+    public Animator transition;
+
+    [Header("Level Manager")]
     public bool cargoInArea = false;
-    public int levelNum;
+    public float transitionTime = 1f;
 
     private static GameManager _instance;
     public static GameManager Instance{ get { return _instance; } }
@@ -19,7 +23,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ChangeLevel(){
-        
+    public void ChangeToNextLevel(){
+        StartCoroutine(ChangeLevelCoroutine(SceneManager.GetActiveScene().buildIndex + 1));
+    }
+
+    public void ResetLevel(){
+        StartCoroutine(ChangeLevelCoroutine(SceneManager.GetActiveScene().buildIndex));
+    }
+
+    IEnumerator ChangeLevelCoroutine(int levelIndex){
+        transition.SetTrigger("StartFade");
+        yield return new WaitForSeconds(transitionTime);
+        SceneManager.LoadScene(levelIndex);
     }
 }
