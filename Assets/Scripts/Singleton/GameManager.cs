@@ -23,6 +23,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.Escape)){
+            Application.Quit();
+        }
+    }
+
     public void ChangeToNextLevel(){
         StartCoroutine(ChangeLevelCoroutine(SceneManager.GetActiveScene().buildIndex + 1));
     }
