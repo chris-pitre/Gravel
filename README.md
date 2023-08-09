@@ -10,6 +10,7 @@
 * LMB to Grapple/Pick Up Objects
 * RMB to Swing
 * E to interact
+* ESC to exit
 
 ### Special Thanks To
 * ProBuilder Unity Package
