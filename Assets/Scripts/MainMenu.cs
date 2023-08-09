@@ -5,7 +5,7 @@ using UnityEngine;
 public class MainMenu : MonoBehaviour
 {
     public void PlayGame(){
-        GameManager.Instance.ChangeToNextLevel();
+        GameManager.Instance.ChangeLevel(1);
     }
 
     public void QuitGame(){

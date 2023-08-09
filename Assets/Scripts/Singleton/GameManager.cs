@@ -37,6 +37,10 @@ public class GameManager : MonoBehaviour
         StartCoroutine(ChangeLevelCoroutine(SceneManager.GetActiveScene().buildIndex));
     }
 
+    public void ChangeLevel(int level){
+        StartCoroutine(ChangeLevelCoroutine(level));
+    }
+
     IEnumerator ChangeLevelCoroutine(int levelIndex){
         transition.SetTrigger("StartFade");
         yield return new WaitForSeconds(transitionTime);
